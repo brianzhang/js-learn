@@ -1,0 +1,32 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>十万节点优化</title>
+</head>
+
+<body>
+  <button id="btn">点击我！</button>
+  <ul id="list"></ul>
+  <script>
+    let btn = document.querySelector('#btn');
+    let list = document.querySelector('#list');
+    btn.addEventListener('click', () => {
+      let now = Date.now();
+      const total = 100000;
+      for (let i = 0; i < total; i++) {
+        let _li = document.createElement('li');
+        _li.innerText = `${~~(Math.random() * total)} - ROW-${i + 1}`;
+        list.appendChild(_li);
+      }
+      console.log(`JS运行时间:${Date.now() - now}`)
+      setTimeout(() => {
+        console.log(`JS总运行时间:${Date.now() - now}`)
+      }, 0)
+    }, false)
+  </script>
+</body>
+
+</html>

@@ -1,7 +1,8 @@
 // AVL 若用作排序时间复杂度可达 O(N); 若用作查找时间复杂度可达严格的O(logN)
-
+// 自平衡二叉查找树
+// 在AVL树中任何节点的两个子树的高度最大差别为1，所以它也被称为高度平衡树
 class Node {
-  constructor (value) {
+  constructor(value) {
     this.value = value
     this.left = null
     this.right = null
@@ -10,13 +11,13 @@ class Node {
 }
 
 class AVL {
-  constructor () {
+  constructor() {
     this.root = null
   }
-  addNode (v) {
+  addNode(v) {
     this.root = this._addChild(this.root, v)
   }
-  _addChild (node, v) {
+  _addChild(node, v) {
     if (!node) {
       return new Node(v)
     }
@@ -53,11 +54,11 @@ class AVL {
 
     return node
   }
-  _getHeight (node) {
+  _getHeight(node) {
     if (!node) return 0
     return node.height
   }
-  _getBalanceFactor (node) {
+  _getBalanceFactor(node) {
     return this._getHeight(node.left) - this._getHeight(node.right)
   }
   // 节点右旋
@@ -68,7 +69,7 @@ class AVL {
   //      1    3             new     3    6
   //     /
   //    new
-  _rightRotate (node) {
+  _rightRotate(node) {
     // 旋转后新根节点
     let newRoot = node.left
     // 需要移动的节点
@@ -94,7 +95,7 @@ class AVL {
   //            5     7      2     5      new
   //                   \
   //                    new
-  _leftRotate (node) {
+  _leftRotate(node) {
     // 旋转后新根节点
     let newRoot = node.right
     // 需要移动的节点

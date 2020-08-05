@@ -1,8 +1,8 @@
 // 工具函数
-function checkArray (array) {
+function checkArray(array) {
   return Array.isArray(array)
 }
-function swap (array, left, right) {
+function swap(array, left, right) {
   let rightValue = array[right]
   array[right] = array[left]
   array[left] = rightValue
@@ -13,7 +13,7 @@ function swap (array, left, right) {
 */
 
 // 1、冒泡 O(n*n) 原理：两两比较
-function bubble (array) {
+function bubble(array) {
   if (!checkArray(array)) {
     return
   }
@@ -26,10 +26,10 @@ function bubble (array) {
   }
   return array
 }
-// console.log(bubble([4, 1, 5, 9, 10, 2, 0]))
+console.log(bubble([4, 1, 5, 9, 10, 2, 0]))
 
 // 2、选择排序 O(n*n) 原理：擂台机制，假定一个最小值
-function select (array) {
+function select(array) {
   if (!checkArray(array)) {
     return
   }
@@ -44,10 +44,10 @@ function select (array) {
   }
   return array
 }
-// console.log(select([4, 1, 5, 9, 10, 2, 0]))
+console.log(select([4, 1, 5, 9, 10, 2, 0]))
 
 // 3、插入排序 O(n*n) 原理：假定一个长度为1的数组A已排序，把数组其他元素插入到A中，插入过程中保证A还是有序的
-function insert (array) {
+function insert(array) {
   if (!checkArray(array)) {
     return
   }
@@ -63,12 +63,12 @@ function insert (array) {
 console.log(insert([4, 1, 5, 9, 10, 2, 0]))
 
 // 4、归并排序 时间：O(N*logN)，空间O(N)
-function merge (array) {
+function merge(array) {
   if (!checkArray(array)) return
   mergeSort(array, 0, array.length - 1)
   return array
 }
-function mergeSort (array, left, right) {
+function mergeSort(array, left, right) {
   // 左右索引相同说明已经只有一个数
   if (left === right) return
   // 等同于 `left + (right - left) / 2`
@@ -99,7 +99,7 @@ function mergeSort (array, left, right) {
 
 // 5、快速排序
 // version 1 时间：O(N*logN) 空间：O(N)
-function quickSort (array) {
+function quickSort(array) {
   if (array.length === 1) return array
   let baseIndex = array.length / 2
   let baseValue = array.splice(baseIndex, 1)[0]
@@ -118,14 +118,14 @@ function quickSort (array) {
 console.log(quickSort([1, 4, 7, 4, 9, 7, 10]))
 
 // version 2 时间：O(N*logN) 空间：O(1)
-function quickSort2 (array) {
-  function sort (array, left, right) {
+function quickSort2(array) {
+  function sort(array, left, right) {
     if (left >= right) return
     const index = partion(array, left, right)
     sort(array, left, index - 1)
     sort(array, index + 1, right)
   }
-  function partion (array, left, right) {
+  function partion(array, left, right) {
     let index = left
     const middleElement = array[right]
     for (let i = left; i < right; i++) {
@@ -143,7 +143,7 @@ function quickSort2 (array) {
 console.log(quickSort2([1, 4, 7, 4, 9, 7, 10]))
 
 // 6、堆排序
-function heap (array) {
+function heap(array) {
   if (!checkArray(array)) return
   // 将最大值交换到首位
   for (let i = 0; i < array.length; i++) {
@@ -159,7 +159,7 @@ function heap (array) {
   return array
 }
 
-function heapInsert (array, index) {
+function heapInsert(array, index) {
   // 如果当前节点比父节点大，就交换
   while (array[index] > array[parseInt((index - 1) / 2)]) {
     swap(array, index, parseInt((index - 1) / 2))
@@ -167,7 +167,7 @@ function heapInsert (array, index) {
     index = parseInt((index - 1) / 2)
   }
 }
-function heapify (array, index, size) {
+function heapify(array, index, size) {
   let left = index * 2 + 1
   while (left < size) {
     // 判断左右节点大小
