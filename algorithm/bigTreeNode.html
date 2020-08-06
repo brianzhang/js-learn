@@ -13,19 +13,35 @@
   <script>
     let btn = document.querySelector('#btn');
     let list = document.querySelector('#list');
+    let total = 100000,
+      once = 20,
+      page = total / once;
+    index = 0
+    function loop(curTotal, curIndex) {
+      if (curTotal <= 0) {
+        return false;
+      }
+      let pageCount = Math.min(curTotal, once);
+      window.requestAnimationFrame(function () {
+        let fragment = document.createDocumentFragment();
+        for (let i = 0; i < pageCount; i++) {
+          let _li = document.createElement('li');
+          _li.innerText = `${~~(Math.random() * total)} - ROW-${i + 1}`;
+          fragment.appendChild(_li);
+        }
+        list.appendChild(fragment);
+        loop(curTotal - pageCount, curIndex + pageCount)
+      })
+    }
     btn.addEventListener('click', () => {
       let now = Date.now();
-      const total = 100000;
-      for (let i = 0; i < total; i++) {
-        let _li = document.createElement('li');
-        _li.innerText = `${~~(Math.random() * total)} - ROW-${i + 1}`;
-        list.appendChild(_li);
-      }
+      loop(total, index);
       console.log(`JS运行时间:${Date.now() - now}`)
       setTimeout(() => {
         console.log(`JS总运行时间:${Date.now() - now}`)
       }, 0)
     }, false)
+
   </script>
 </body>
 

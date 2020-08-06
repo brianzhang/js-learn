@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>布局</title>
+  <style>
+    *,
+    html,
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    header,
+    footer {
+      background-color: #ddd;
+      height: 80px;
+    }
+
+    .float {
+      float: left;
+    }
+
+    .container {
+      min-height: 90vh;
+      padding-left: 200px;
+      padding-right: 150px;
+      background: greenyellow;
+      min-width: 400px;
+    }
+
+    .container .left {
+      background-color: aqua;
+      width: 200px;
+      margin-left: -100%;
+      position: relative;
+      left: -200px;
+      height: 300px;
+    }
+
+    .container .center {
+      background-color: blue;
+      width: 100%;
+      height: 500px;
+    }
+
+    .container .right {
+      background-color: green;
+      width: 150px;
+      margin-left: -150px;
+      position: relative;
+      left: 150px;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <div class="container">
+    <div class="center float">#CENTER</div>
+    <div class="left float">#LEFT</div>
+    <div class="right float">#RIGHT</div>
+  </div>
+  <footer></footer>
+</body>
+
+</html>

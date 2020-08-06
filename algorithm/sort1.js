@@ -13,7 +13,7 @@ function BubbleSort(arr) {
   let len = arr.length; // 初始化长度
   for (let i = 0; i < len; i++) {
     for (let j = 0; j < len - 1 - i; j++) {
-      if (arr[j] > arr[j + 1]) { //比较i, j两数大小
+      if (arr[j] > arr[j + 1]) { //比较j, j两数大小
         swap(arr, j, j + 1)
       }
     }
@@ -222,6 +222,7 @@ console.log(_map)
 function curry(fn, len = fn.length) {
   return _curry.call(this, fn, len);
 }
+
 function _curry(fn, len, ...args) {
   return function (...params) {
     let _args = [...args, ...params]
@@ -232,6 +233,7 @@ function _curry(fn, len, ...args) {
     }
   }
 }
+
 console.log('----------------------------------------------------------------')
 let _fn = curry(function (a, b, c, d, e, f) {
   console.log(a, b, c, d, e, f);
@@ -281,3 +283,107 @@ let c = _fn.myBind(this, 1, 77, 3, 4, 5, 6)
 c()
 
 console.log(c.length)
+
+// #实现数组解构destructuringArray方法
+function descArr1(arr, str) {
+  var run = new Function('', `
+    const ${str} = ${JSON.stringify(arr)};
+    const arr = ${JSON.stringify(str)}.match(/[a-z]+/g);
+    const obj = {};
+    for(let i of arr) {
+      obj[i] = eval(i)
+    }
+    console.log(obj)
+  `)
+  run(arr, str);
+}
+
+function descArr2(arr, str) {
+  var temp = str.replace(/[\[\]]/g, '')
+  return new Function(`var ${temp}; ${str}=${JSON.stringify(arr)}; return {${temp}};`)();
+}
+
+descArr1([1, [2, 4], 4], '[a, [b, d,e],c]')
+
+console.log('descArr2', descArr2([1, [2, [4]], 3], "[a,[b,[d,e]],c]"))
+
+
+// # 回文判断
+const Paindromes = {
+  'reverse': function (str) {
+    let reg = /[\W_]/g;
+    // \W 表示匹配下划线或者所有非字母非数字中的任意一个
+    let newStr = str.replace(reg, '').toLowerCase();
+    let reverseStr = newStr.split('').reverse().join('');
+    return reverseStr === newStr;
+  },
+  'loop1': function (str) {
+    let reg = /[\W_]/g;
+    let newStr = str.replace(reg, '').toLowerCase();
+    for (let i = 0, len = Math.floor(newStr.length / 2); i < len; i++) {
+      if (newStr[i] !== newStr[newStr.length - 1 - i]) return false;
+    }
+    return true;
+  }
+}
+console.log('Paindromes reverse', Paindromes['reverse']('madam'))
+console.log('Paindromes loop1', Paindromes['loop1']('madamadam'))
+
+// # 发布订阅模式
+/**
+ * {on, emit, once, removeListener}
+ */
+class EventEmitter {
+  constructor() {
+    this.events = {};
+  }
+  on(eventName, handler) {
+    if (!this.events[eventName]) {
+      this.events[eventName] = [handler]
+    } else {
+      this.events[eventName].push(handler)
+    }
+  }
+  emit(eventName) {
+    console.log(this.events)
+    this.events[eventName] && this.events[eventName].forEach(cb => cb())
+  }
+  removeListener(eventName, handler) {
+    if (this.events[eventName]) {
+      this.events[eventName] = this.events[eventName].filter(cb => cb !== handler)
+    }
+  }
+  once(eventName, handler) {
+    let fn = () => {
+      handler() //调用执行
+      this.removeListener(eventName, fn) // 删除注册
+    }
+    this.on(eventName, fn)
+  }
+}
+// test EventEmitter;
+let em = new EventEmitter();
+let _runcount = 0;
+em.on('run', () => {
+  _runcount++;
+  console.log("em run", _runcount)
+})
+em.once('oneceRun', () => {
+  console.log('onece Run')
+})
+function fn1() {
+  console.log('call fn1')
+}
+em.on('fn1', fn1)
+
+let _runTimer = setInterval(() => {
+  em.emit('run')
+  em.removeListener('fn1', fn1)
+  em.emit('fn1')
+  em.emit('oneceRun')
+  if (_runcount === 5) {
+    console.log('run end.')
+    clearInterval(_runTimer)
+  }
+}, 1)
+
