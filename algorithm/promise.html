@@ -1,0 +1,48 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promise PAGE</title>
+  <script src="./promise1.js" async></script>
+</head>
+
+<body>
+  <button id="btn">点我试试</button>
+  <div id="content"></div>
+  <script>
+    function getData(content) {
+      content.innerText = 'Loading...'
+      return new Promise1(function (resolve, reject) {
+        setTimeout(function () {
+          resolve({ data: [{ name: 'brian', age: 20 }], status: 200 })
+        }, 2000)
+      })
+    }
+    function render(data, content) {
+      content.innerText = '';
+      data.forEach(function (i) {
+        Object.keys(i).forEach(function (item, y) {
+          var _span = document.createElement('span')
+          _span.innerText = i[item]
+          _span.style.cssText = "display:block;font-size: 18px;color: #666;"
+          content.appendChild(_span);
+        })
+      })
+    }
+    (() => {
+      let btn = document.querySelector('#btn');
+      let content = document.querySelector('#content');
+      btn.addEventListener('click', () => {
+        console.log(Promise1)
+        getData(content).then(({ data, status }) => {
+          console.log(data)
+          render(data, content)
+        })
+      }, false);
+    })();
+  </script>
+</body>
+
+</html>

@@ -165,6 +165,7 @@ let _arr = _testArray1;
 while (_arr.some(Array.isArray)) {
   _arr = [].concat(..._arr)
 }
+//数组去重
 function distinctArray(arr, type = 'es6') {
   return {
     'es6': () => {
