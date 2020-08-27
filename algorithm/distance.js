@@ -17,7 +17,7 @@ function distance(rect1, rect2) {
   Dx = Math.abs(point_r2.x - point_r1.x)
   Dy = Math.abs(point_r2.y - point_r1.y);
 
-  // 如果两举行不相交，在X轴方向有部分重合的两个方块，最小距离是上方块的下边线与下方块的上边线之间的距离
+  // 如果两方块不相交，在X轴方向有部分重合的两个方块，最小距离是上方块的下边线与下方块的上边线之间的距离
   if ((Dx < ((rect1.width + rect2.width) / 2)) && (Dy >= ((rect1.height + rect2.height) / 2))) {
     min_dist = Dy - ((rect1.height + rect2.height) / 2);
     // 两个方块不相交，在Y轴方向有部分重合的两个方块，最小距离是左方块的右边线与右方块的左边线之间的距离
@@ -51,5 +51,5 @@ function runTest(...args) {
   })
   let data = distance(...args),
     desc = document.querySelector('#desc');
-  desc.innerText = `两个盒子的距离：${data}`;
+  desc.innerText = `两个方块的距离：${data}`;
 }
