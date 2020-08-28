@@ -1,0 +1,104 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>当前时间</title>
+  <style>
+    html,
+    body {
+      margin: 0px;
+      padding: 0px;
+      background-color: rgba(0, 0, 0, 0.8);
+      font-family: -apple-system, system-ui, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    span {
+      color: #fff;
+      margin-right: 12px;
+      font-size: 220px;
+      font-weight: bold;
+    }
+
+    span#hours::after,
+    span#minutes::after {
+      content: ':';
+      display: inline;
+      margin-left: 12px;
+    }
+
+    span#minutes.odd::after {
+      color: #000;
+    }
+
+    .year,
+    .timer {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .timer span {
+      width: 340px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="year">
+      <span id="year">-----</span>
+    </div>
+    <div class="timer">
+      <span id="hours">-</span><span id="minutes">-</span><span id="seconds">-</span>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const years = document.querySelector('#year'),
+        hours = document.querySelector('#hours'),
+        minutes = document.querySelector('#minutes'),
+        seconds = document.querySelector('#seconds');
+
+      function getDataTime() {
+        const d = new Date(Date.now());
+        return {
+          years: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+          hours: d.getHours(),
+          minutes: d.getMinutes(),
+          seconds: d.getSeconds()
+        }
+      }
+
+      function render() {
+        const d = getDataTime();
+        years.innerText = d.years;
+        hours.innerText = d.hours < 10 ? '0' + d.hours : d.hours;
+        minutes.innerText = d.minutes < 10 ? '0' + d.minutes : d.minutes;
+        seconds.innerText = d.seconds < 10 ? '0' + d.seconds : d.seconds;
+        if (minutes.className === 'odd') {
+          minutes.className = ''
+        } else {
+          minutes.className = 'odd'
+        }
+      }
+
+      function run() {
+        setInterval(function () {
+          render()
+        }, 999)
+      }
+      render();
+      run();
+    })()
+  </script>
+</body>
+
+</html>
